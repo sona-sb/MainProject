@@ -6,11 +6,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Base paths
-BASE_DIR = Path(__file__).resolve().parents[3]  # project root (sona-sb-niyam-guru/)
-DATA_DIR = BASE_DIR / "data"
-RAW_JUDGMENTS_DIR = DATA_DIR / "raw_judgments"
+BASE_DIR = Path(__file__).resolve().parents[3]  # backend/
+PROJECT_ROOT = BASE_DIR.parent  # niyam-guru/
+DATA_DIR = PROJECT_ROOT / "data"  # niyam-guru/data/ (for raw data and CSVs)
+BACKEND_DATA_DIR = BASE_DIR / "data"  # backend/data/ (for vectorstore)
+
+RAW_JUDGMENTS_DIR = DATA_DIR / "raw_judgements"  # Note: British spelling with 'e'
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
-VECTORSTORE_DIR = DATA_DIR / "vectorstore" / "consumer_act_gemini_db"
+VECTORSTORE_DIR = BACKEND_DATA_DIR / "vectorstore" / "consumer_act_gemini_db"
 
 # Dataset files
 CONSUMER_LAWS_CSV = PROCESSED_DATA_DIR / "consumer_laws.csv"

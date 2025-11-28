@@ -3,6 +3,10 @@ import re
 import pandas as pd
 import os
 
+# Import configuration from settings
+from niyam_guru_backend.config import RAW_JUDGMENTS_DIR, CONSUMER_CASES_CSV
+
+
 def extract_text_from_pdf(pdf_path, max_pages=5):
     """Extract text from first 5 pages (increased for better coverage)"""
     doc = fitz.open(pdf_path)
@@ -240,7 +244,7 @@ def extract_case_info(pdf_path, filename, year_folder):
     }
 
 # Main execution
-primary_dir = r"D:\MootCourt\supreme_court_judgments"
+primary_dir = RAW_JUDGMENTS_DIR
 records = []
 total_pdfs = 0
 skipped = 0
@@ -305,7 +309,7 @@ column_order = ['Case Title', 'Petitioner', 'Respondent', 'Year', 'Date of Judgm
                 'Headnote', 'PDF_File', 'Folder', 'FullText_Sample']
 df = df[column_order]
 
-output_file = "consumer_cases_extracted.csv"
+output_file = CONSUMER_CASES_CSV
 df.to_csv(output_file, index=False)
 print(f"\n✅ CSV saved: {output_file} with {len(df)} rows")
 

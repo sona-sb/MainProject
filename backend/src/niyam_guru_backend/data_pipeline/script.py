@@ -1,6 +1,10 @@
 import os
 import re
 
+# Import configuration from settings
+from niyam_guru_backend.config import RAW_JUDGMENTS_DIR
+
+
 def sanitize_filename(filename):
     """
     Removes forbidden characters (', [, ], ;) from a filename.
@@ -72,8 +76,5 @@ def rename_pdf_files(root_folder):
     print("Finished processing PDF files.")  # Indicate completion
 
 if __name__ == "__main__":
-    #  Set this to the path of your 'supreme_court_judgments' folder.
-    #  Example (Windows):  r'C:\Users\YourUsername\Documents\supreme_court_judgments'
-    #  Example (macOS/Linux): '/Users/YourUsername/Documents/supreme_court_judgments'
-    root_directory = r'D:\Legal_Aid_Chatbot\Law Data\supreme_court_judgments'
-    rename_pdf_files(root_directory)
+    # Use RAW_JUDGMENTS_DIR from settings
+    rename_pdf_files(str(RAW_JUDGMENTS_DIR))

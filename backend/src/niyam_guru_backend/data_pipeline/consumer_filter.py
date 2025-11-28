@@ -1,7 +1,10 @@
 import fitz  # PyMuPDF
 import os
 
-primary_dir = r"D:\MootCourt\supreme_court_judgments"
+# Import configuration from settings
+from niyam_guru_backend.config import RAW_JUDGMENTS_DIR
+
+primary_dir = RAW_JUDGMENTS_DIR
 
 # Consumer case identifying keywords
 consumer_keywords = [

@@ -1,21 +1,15 @@
-import os
-
 # LangChain + Google Gemini imports
-from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_classic.chains.retrieval_qa.base import RetrievalQA
 
-# ========== Configuration / Setup ==========
-load_dotenv()
-# Ensure your Google API key is set as an environment variable
-# os.getenv("GOOGLE_API_KEY")
-
-# --- Configuration ---
-EMBEDDING_MODEL = "models/gemini-embedding-001"
-LLM_MODEL = "gemini-2.5-pro" # Using the powerful 1.5 Pro model
-PERSIST_DIRECTORY = "./consumer_act_gemini_db"
+# Import configuration from settings
+from niyam_guru_backend.config import (
+    EMBEDDING_MODEL,
+    LLM_MODEL,
+    VECTORSTORE_DIR,
+)
 
 print("--- Step 1: Loading Existing Vector Database ---")
 # ========== Load Embeddings and Vector Store ==========
@@ -25,11 +19,11 @@ embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
 
 # Load the persisted vector store from disk
 vectorstore = Chroma(
-    persist_directory=PERSIST_DIRECTORY,
+    persist_directory=str(VECTORSTORE_DIR),
     embedding_function=embeddings
 )
 
-print(f"✅ Database loaded successfully from: '{PERSIST_DIRECTORY}'")
+print(f"✅ Database loaded successfully from: '{VECTORSTORE_DIR}'")
 
 
 print("\n--- Step 2: Setting up the LLM and Retriever ---")

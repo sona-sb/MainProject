@@ -1,27 +1,22 @@
-import os
 import pandas as pd
 import time
 
 # LangChain + Google Gemini imports
-from dotenv import load_dotenv
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain.schema import Document
+from langchain_core.documents import Document
 
-# ========== Configuration / Setup ==========
-load_dotenv()
-# Ensure your Google API key is set as an environment variable
-# os.getenv("GOOGLE_API_KEY")
-
-# --- Configuration ---
-EMBEDDING_MODEL = "models/gemini-embedding-001"
-CSV_PATH = r"D:\MootCourt\dataset\consumer_laws.csv"
-PERSIST_DIRECTORY = "./consumer_act_gemini_db"
+# Import configuration from settings
+from niyam_guru_backend.config import (
+    CONSUMER_LAWS_CSV,
+    VECTORSTORE_DIR,
+    EMBEDDING_MODEL,
+)
 
 print("--- Step 1: Loading CSV and Creating Documents ---")
 
 # ========== Load CSV and Create Documents ==========
-df = pd.read_csv(CSV_PATH)
+df = pd.read_csv(CONSUMER_LAWS_CSV)
 
 docs = []
 for _, row in df.iterrows():
@@ -45,7 +40,7 @@ embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
 # Initialize an empty Chroma vector store with a persist directory
 vectorstore = Chroma(
     embedding_function=embeddings,
-    persist_directory=PERSIST_DIRECTORY
+    persist_directory=str(VECTORSTORE_DIR)
 )
 
 # Add documents to the vector store one by one with a delay to avoid rate limiting
@@ -58,4 +53,4 @@ for i, doc in enumerate(docs):
 # Persist the database to disk
 vectorstore.persist()
 
-print(f"\n✅ Vector database has been successfully created and saved in: '{PERSIST_DIRECTORY}'")
+print(f"\n✅ Vector database has been successfully created and saved in: '{VECTORSTORE_DIR}'")
