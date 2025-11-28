@@ -10,6 +10,8 @@ from .settings import (
     GOOGLE_API_KEY,
     EMBEDDING_MODEL,
     LLM_MODEL,
+    ENRICH_MODEL,
+    API_RATE_LIMIT_SECONDS,
     DEBUG,
 )
 
@@ -24,5 +26,7 @@ __all__ = [
     "GOOGLE_API_KEY",
     "EMBEDDING_MODEL",
     "LLM_MODEL",
+    "ENRICH_MODEL",
+    "API_RATE_LIMIT_SECONDS",
     "DEBUG",
 ]
