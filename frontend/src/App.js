@@ -20,30 +20,21 @@ const LandingPage = () => {
       <nav className="navbar">
         <div className="logo-section">
           <span className="logo-icon">⚖️</span>
-          <span className="logo-text">Niyam-Guru</span>
+          <span className="logo-text">नियम-Guru</span>
         </div>
         
         <div className="nav-links">
-          <a href="#features">Why Niyam-Guru</a>
+          <a href="#features">Why नियम-Guru</a>
           <a href="#about">About Us</a>
-          <a href="#blogs">Blogs</a>
-        </div>
-
-        <div className="nav-actions">
-          <button className="btn-outline">Try For Free</button>
-          <button className="btn-dark">Free Consultation</button>
         </div>
       </nav>
 
       {/* --- Hero Section --- */}
       <header className="hero-section">
         
-        <div className="pill-badge">
-          🇮🇳 Affordable Justice for all
-        </div>
 
         <h1 className="hero-title">
-          India's legal platform for <br /> everyone
+          Empowering the Nation with <br /> Legal Clarity
         </h1>
 
         {/* Social Proof Avatars */}
@@ -55,8 +46,8 @@ const LandingPage = () => {
           <img src="https://i.pravatar.cc/100?img=32" alt="User" />
         </div>
 
-        <p className="sub-text-hindi">
-          अपनी खुद की भाषा में अपनी समस्या बताएं।
+        <p className="sub-text">
+          Justice Simplified
         </p>
 
         {/* --- Main Call to Action (Connected to Router) --- */}
@@ -74,14 +65,14 @@ const LandingPage = () => {
         <div className="suggestion-chips">
           <span>AI Moot Court Simulator</span>
           <span>Legal Documentation</span>
-          <span>Property Check</span>
+          <span>Case Research</span>
         </div>
       </header>
 
       {/* --- Key Features Section --- */}
       <section id="features" className="features-section">
         <div className="section-header">
-          <h2>Why Choose Niyam-Guru?</h2>
+          <h2>Why Choose नियम-Guru?</h2>
           <p>Experience the Future of Law with our AI-powered solutions.</p>
         </div>
 
@@ -115,19 +106,18 @@ const LandingPage = () => {
           <div className="about-text">
             <h2>About Us</h2>
             <p>
-              Niyam-Guru was founded with a simple yet powerful mission: 
-              <strong> to make justice accessible, affordable, and understandable for every Indian.</strong>
+              Niyam-Guru was established with a singular vision: 
+              <strong>  to democratize legal access across India.</strong>
             </p>
             <p>
-              We combine cutting-edge Artificial Intelligence with deep legal expertise to bridge the gap 
-              between the common man and the complex legal system. Whether you are a law student looking 
-              to sharpen your skills or a citizen seeking legal advice, Niyam-Guru is your companion.
+              At Niyam-Guru, we believe that justice should be a right, not a privilege.By converging advanced Artificial Intelligence with deep judicial insight, we dismantle the complexities of the legal system. Whether you are an aspiring attorney refining your craft or a citizen in
+              need of counsel, Niyam-Guru stands as your trusted ally in the pursuit of justice.
             </p>
-            <button className="btn-dark">Learn More About Our Mission →</button>
+            
           </div>
           <div className="about-image">
             <img 
-              src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              src="https://images.unsplash.com/photo-1618771623063-6c3faa854a61?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
               alt="Legal Books and Gavel" 
             />
           </div>
