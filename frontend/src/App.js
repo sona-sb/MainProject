@@ -1,172 +1,172 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import Login from './login';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+import SignUp from './signup'; // Import your Signup component
+import ChatInterface from './ChatInterface';
+import MootCourt from './mootcourt';
 
-// --- IMAGE CONFIGURATION ---
-// PASTE YOUR IMAGE LINKS HERE
-const IMAGES = {
-  JUDGE: "https://img.freepik.com/premium-vector/judge-avatar-man-flat-icon-illustration_102766-993.jpg?w=200", 
-  OPPONENT: "https://cdn-icons-png.flaticon.com/512/4202/4202835.png", // Replace with Opponent Image
-  USER: "https://cdn-icons-png.flaticon.com/512/4202/4202843.png"     // Replace with User Image
-};
-
-const ACTORS = {
-  JUDGE: 'judge',
-  OPPONENT: 'opponent',
-  USER: 'user'
-};
-
-function App() {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: ACTORS.JUDGE,
-      text: "Court is now in session. The Defendant may present their opening statement."
-    }
-  ]);
-  const [inputText, setInputText] = useState('');
-  const [isSimulating, setIsSimulating] = useState(false);
-  
-  const chatEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleUserSubmit = (e) => {
-    e.preventDefault();
-    if (!inputText.trim()) return;
-
-    const userMsg = {
-      id: Date.now(),
-      sender: ACTORS.USER,
-      text: inputText
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-    setInputText('');
-    setIsSimulating(true);
-
-    setTimeout(() => {
-      const opponentMsg = {
-        id: Date.now() + 1,
-        sender: ACTORS.OPPONENT,
-        text: generateOpponentResponse()
-      };
-      setMessages((prev) => [...prev, opponentMsg]);
-      
-      setTimeout(() => {
-        const judgeMsg = {
-          id: Date.now() + 2,
-          sender: ACTORS.JUDGE,
-          text: generateJudgeResponse()
-        };
-        setMessages((prev) => [...prev, judgeMsg]);
-        setIsSimulating(false);
-      }, 2000);
-
-    }, 1500);
-  };
-
-  const generateOpponentResponse = () => {
-    const responses = [
-      "Objection! The counsel is leading the witness.",
-      "That is purely circumstantial evidence.",
-      "My learned friend fails to consider the precedence set in 1994.",
-      "I strongly disagree with that characterization of the facts.",
-      "The prosecution has not met the burden of proof."
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
-
-  const generateJudgeResponse = () => {
-    const responses = [
-      "Order in the court. I will allow the argument, proceed.",
-      "Sustained. Please rephrase, Counselor.",
-      "Overruled. The witness will answer the question.",
-      "I have heard enough on this point. Move along.",
-      "Noted. Let us see where this leads."
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-  };
-
-  const latestJudgeMessage = [...messages].reverse().find(m => m.sender === ACTORS.JUDGE);
+/* =========================================
+   1. The Landing Page Component 
+   (Moved your original UI here)
+   ========================================= */
+const LandingPage = () => {
+  const navigate = useNavigate();
 
   return (
-    <div className="courtroom-container">
+    <div className="landing-container">
       
-      {/* --- Top Section: The Bench (Judge) --- */}
-      <div className="judge-bench">
-        <div className="judge-avatar-container">
-          <img 
-            src={IMAGES.JUDGE} 
-            alt="Judge" 
-            className="judge-image" 
-          />
-          <div className="judge-name">Honorable Justice AI</div>
+      {/* --- Navbar --- */}
+      <nav className="navbar">
+        <div className="logo-section">
+          <span className="logo-icon">⚖️</span>
+          <span className="logo-text">Niyam-Guru</span>
         </div>
         
-        <div className={`judge-speech-bubble ${latestJudgeMessage ? 'visible' : ''}`}>
-          {latestJudgeMessage ? latestJudgeMessage.text : "..."}
+        <div className="nav-links">
+          <a href="#features">Why Niyam-Guru</a>
+          <a href="#about">About Us</a>
+          <a href="#blogs">Blogs</a>
         </div>
-      </div>
 
-      {/* --- Middle Section: The Floor (Arguments) --- */}
-      <div className="argument-floor">
-        {messages.map((msg) => {
-          if (msg.sender === ACTORS.JUDGE) return null;
-          
-          const isUser = msg.sender === ACTORS.USER;
+        <div className="nav-actions">
+          <button className="btn-outline">Try For Free</button>
+          <button className="btn-dark">Free Consultation</button>
+        </div>
+      </nav>
 
-          return (
-            <div 
-              key={msg.id} 
-              className={`message-row ${isUser ? 'row-right' : 'row-left'}`}
-            >
-              {/* If Opponent, Image goes FIRST (Left) */}
-              {!isUser && (
-                <img src={IMAGES.OPPONENT} alt="Opponent" className="counsel-avatar avatar-opponent" />
-              )}
+      {/* --- Hero Section --- */}
+      <header className="hero-section">
+        
+        <div className="pill-badge">
+          🇮🇳 Affordable Justice for all
+        </div>
 
-              <div className={`message-bubble ${msg.sender}`}>
-                <span className="sender-label">
-                  {isUser ? 'Counsel (You)' : 'Opposing Counsel'}
-                </span>
-                <p>{msg.text}</p>
-              </div>
+        <h1 className="hero-title">
+          India's legal platform for <br /> everyone
+        </h1>
 
-              {/* If User, Image goes SECOND (Right) */}
-              {isUser && (
-                <img src={IMAGES.USER} alt="User" className="counsel-avatar avatar-user" />
-              )}
-            </div>
-          );
-        })}
-        {isSimulating && <div className="typing-indicator">Opposing counsel is preparing an argument...</div>}
-        <div ref={chatEndRef} />
-      </div>
+        {/* Social Proof Avatars */}
+        <div className="avatar-group">
+          <img src="https://i.pravatar.cc/100?img=1" alt="User" />
+          <img src="https://i.pravatar.cc/100?img=5" alt="User" />
+          <img src="https://i.pravatar.cc/100?img=9" alt="User" />
+          <img src="https://i.pravatar.cc/100?img=12" alt="User" />
+          <img src="https://i.pravatar.cc/100?img=32" alt="User" />
+        </div>
 
-      {/* --- Bottom Section: Input --- */}
-      <div className="counsel-desk">
-        <form onSubmit={handleUserSubmit} className="input-form">
-          <input
-            type="text"
-            className="argument-input"
-            placeholder="Type your legal argument here..."
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            disabled={isSimulating}
-          />
-          <button type="submit" className="gavel-btn" disabled={isSimulating}>
-            Present
+        <p className="sub-text-hindi">
+          अपनी खुद की भाषा में अपनी समस्या बताएं।
+        </p>
+
+        {/* --- Main Call to Action (Connected to Router) --- */}
+        <div className="cta-container">
+          <button className="hero-btn login-btn" onClick={() => navigate('/login')}>
+            Login
           </button>
-        </form>
-      </div>
+          
+          {/* This button now navigates to the Signup page */}
+          <button className="hero-btn signup-btn" onClick={() => navigate('/signup')}>
+            Sign Up
+          </button>
+        </div>
+
+        <div className="suggestion-chips">
+          <span>AI Moot Court Simulator</span>
+          <span>Legal Documentation</span>
+          <span>Property Check</span>
+        </div>
+      </header>
+
+      {/* --- Key Features Section --- */}
+      <section id="features" className="features-section">
+        <div className="section-header">
+          <h2>Why Choose Niyam-Guru?</h2>
+          <p>Experience the Future of Law with our AI-powered solutions.</p>
+        </div>
+
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="icon">🏛️</div>
+            <h3>Moot Court Simulator</h3>
+            <p>Practice your arguments against an AI Judge and Opposing Counsel in a realistic virtual environment.</p>
+          </div>
+          <div className="feature-card">
+            <div className="icon">📄</div>
+            <h3>Instant Drafting</h3>
+            <p>Generate legal notices, rental agreements, and affidavits in minutes using smart templates.</p>
+          </div>
+          <div className="feature-card">
+            <div className="icon">🔍</div>
+            <h3>Case Research</h3>
+            <p>Scan through thousands of previous judgements and precedents instantly to strengthen your case.</p>
+          </div>
+          <div className="feature-card">
+            <div className="icon">🗣️</div>
+            <h3>Multilingual Support</h3>
+            <p>Interact with the legal system in your local language. We break the language barrier in justice.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* --- About Us Section --- */}
+      <section id="about" className="about-section">
+        <div className="about-content">
+          <div className="about-text">
+            <h2>About Us</h2>
+            <p>
+              Niyam-Guru was founded with a simple yet powerful mission: 
+              <strong> to make justice accessible, affordable, and understandable for every Indian.</strong>
+            </p>
+            <p>
+              We combine cutting-edge Artificial Intelligence with deep legal expertise to bridge the gap 
+              between the common man and the complex legal system. Whether you are a law student looking 
+              to sharpen your skills or a citizen seeking legal advice, Niyam-Guru is your companion.
+            </p>
+            <button className="btn-dark">Learn More About Our Mission →</button>
+          </div>
+          <div className="about-image">
+            <img 
+              src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              alt="Legal Books and Gavel" 
+            />
+          </div>
+        </div>
+      </section>
+
+      <footer className="footer">
+        <p>© 2025 Niyam-Guru. All Rights Reserved.</p>
+      </footer>
+
     </div>
   );
-}
+};
+
+/* =========================================
+   2. The Main App Component (The Router)
+   ========================================= */
+const App = () => {
+  return (
+    <Router>
+      <Routes>
+        {/* Route for Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+        
+        {/* Route for Signup Page */}
+        <Route path="/signup" element={<SignUp />} />
+        
+        {/* Route for Login */}
+<Route path="/login" element={<Login />} />
+        
+        {/* Add the Chat Route */}
+        <Route path="/chat" element={<ChatInterface />} />
+        
+        {/* 4. The Moot Court Simulator (Linked from Chat) */}
+        <Route path="/court" element={<MootCourt />} />
+      
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;
