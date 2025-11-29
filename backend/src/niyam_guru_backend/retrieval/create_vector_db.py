@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 
 # Import configuration from settings
 from niyam_guru_backend.config import (
-    CONSUMER_LAWS_CSV,
+    CONSUMER_CASES_CSV,
     VECTORSTORE_DIR,
     EMBEDDING_MODEL,
 )
@@ -16,16 +16,38 @@ from niyam_guru_backend.config import (
 print("--- Step 1: Loading CSV and Creating Documents ---")
 
 # ========== Load CSV and Create Documents ==========
-df = pd.read_csv(CONSUMER_LAWS_CSV)
+df = pd.read_csv(CONSUMER_CASES_CSV)
 
 docs = []
 for _, row in df.iterrows():
-    content = f"{row['Section_Identifier']} — {row['Section_Title']}\n{row['Section_Text']}"
+    # Build content from case information for embedding
+    case_context = row.get('case_context', '') or ''
+    legal_reasoning = row.get('legal_reasoning', '') or ''
+    decision_summary = row.get('decision_summary', '') or ''
+    headnote = row.get('Headnote', '') or ''
+    
+    content = f"""Case: {row['Case Title']}
+Petitioner: {row['Petitioner']} vs Respondent: {row['Respondent']}
+Year: {row['Year']}
+
+Case Context: {case_context}
+
+Legal Reasoning: {legal_reasoning}
+
+Decision Summary: {decision_summary}
+
+Headnote: {headnote}"""
+    
     metadata = {
-        "chapter_number": row["Chapter_Number"],
-        "chapter_title": row["Chapter_Title"],
-        "section_identifier": row["Section_Identifier"],
-        "section_title": row["Section_Title"]
+        "case_title": row["Case Title"],
+        "petitioner": row["Petitioner"],
+        "respondent": row["Respondent"],
+        "year": str(row["Year"]),
+        "date_of_judgment": str(row.get("Date of Judgment", "")),
+        "outcome": str(row.get("Outcome", "")),
+        "citation": str(row.get("Citation", "")),
+        "pdf_file": str(row.get("PDF_File", "")),
+        "folder": str(row.get("Folder", ""))
     }
     docs.append(Document(page_content=content, metadata=metadata))
 

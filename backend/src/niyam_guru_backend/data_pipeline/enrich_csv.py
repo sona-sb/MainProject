@@ -138,8 +138,9 @@ def enrich_csv_with_llm_analysis():
     print(f"\n🔄 Processing {total} cases...\n")
     
     for idx, row in df.iterrows():
-        # Skip if already processed
-        if pd.notna(row.get('case_context')) and row['case_context'] != 'Not available in document':
+        # Skip if already processed (successfully or with known errors)
+        case_context = row.get('case_context')
+        if pd.notna(case_context) and case_context not in ['', None]:
             skipped += 1
             continue
         
