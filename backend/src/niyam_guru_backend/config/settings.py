@@ -13,7 +13,8 @@ BACKEND_DATA_DIR = BASE_DIR / "data"  # backend/data/ (for vectorstore)
 
 RAW_JUDGMENTS_DIR = DATA_DIR / "raw_judgements"  # Note: British spelling with 'e'
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
-VECTORSTORE_DIR = BACKEND_DATA_DIR / "vectorstore" / "consumer_act_gemini_db"
+VECTORSTORE_DIR = DATA_DIR / "vectorstore" / "consumer_act_gemini_db"
+SIMULATION_DIR = DATA_DIR / "simulation"
 
 # Dataset files
 CONSUMER_LAWS_CSV = PROCESSED_DATA_DIR / "consumer_laws.csv"
